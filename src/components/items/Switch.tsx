@@ -23,10 +23,15 @@ const Switch: React.FC<SwitchProps> = ({
     <div className="flex items-center space-x-2 p-6">
       <label className="text-md text-white font-semibold">{label}</label>
       <div
-        className={`relative w-10 h-6 bg-gray-300 rounded-full cursor-pointer transition-all duration-300 ${
+        className={`relative w-10 h-6 bg-gray-300 rounded-full cursor-pointer transition-all duration-300 focus:outline-none focus:ring hover:ring ${
           isChecked ? "bg-green-500" : "bg-gray-400"
         }`}
         onClick={handleToggle}
+        onKeyPress={(e) => {
+          if (e.key === " " || e.key === "Enter") {
+            handleToggle();
+          }
+        }}
         role="switch"
         aria-checked={isChecked}
         tabIndex={0}
@@ -37,6 +42,22 @@ const Switch: React.FC<SwitchProps> = ({
           }`}
         />
       </div>
+      <span
+        className={`text-md text-gray-400 font-semibold ${
+          isChecked ? "hidden" : "block"
+        }`}
+        aria-hidden="true"
+      >
+        Off
+      </span>
+      <span
+        className={`text-md text-green-500 font-semibold ${
+          isChecked ? "block" : "hidden"
+        }`}
+        aria-hidden="true"
+      >
+        On
+      </span>
     </div>
   );
 };

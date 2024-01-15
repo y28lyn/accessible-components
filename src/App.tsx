@@ -18,7 +18,7 @@ function App() {
       <main id="main" className="bg-[#121315]">
         <Title title="Switch" />
         <Switch
-          label="On/Off"
+          label="Notifications"
           defaultChecked={true}
           onChange={handleSwitchChange}
         />
