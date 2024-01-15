@@ -1,6 +1,6 @@
 export const Header = () => {
   return (
-    <div className="relative h-screen flex flex-col-reverse py-16 lg:pt-0 lg:flex-col lg:pb-0">
+    <div className="relative flex flex-col-reverse py-16 lg:pt-0 lg:flex-col lg:pb-0 overflow-hidden h-screen">
       <div className="inset-y-0 top-0 right-0 z-0 w-full max-w-xl px-4 mx-auto md:px-0 lg:pr-0 lg:mb-0 lg:mx-0 lg:w-7/12 lg:max-w-full lg:absolute xl:px-0">
         <svg
           className="absolute left-0 hidden h-full text-white transform -translate-x-1/2 lg:block"
@@ -21,18 +21,18 @@ export const Header = () => {
         <div className="mb-16 lg:my-40 lg:max-w-lg lg:pr-5">
           <h2 className="mb-5 font-sans text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-none">
             Accessible
-            <br className="hidden md:block" />
-            <span className="inline-block text-emerald-400">components</span>
+            <br className="block" />
+            <span className="inline-block text-emerald-400"> components</span>
           </h2>
           <p className="pr-5 mb-5 text-base text-gray-700 md:text-lg">
-            Discover a world of accessible components at [Library Name]. Elevate
-            your web projects with user-friendly and inclusive elements designed
-            for seamless integration. Prioritize accessibility without
-            compromising innovation.
+            Discover a world of accessible components. Elevate your web projects
+            with user-friendly and inclusive elements designed for seamless
+            integration. Prioritize accessibility without compromising
+            innovation.
           </p>
           <div className="flex items-center">
             <a
-              href="/"
+              href="#main"
               className="inline-flex items-center justify-center h-12 px-6 mr-6 font-medium tracking-wide bg-emerald-400 text-white transition duration-200 hover:scale-105 rounded shadow-md"
             >
               Get started
