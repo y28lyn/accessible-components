@@ -6,11 +6,30 @@ import Switch from "./components/items/Switch";
 import MenuButton from "./components/items/MenuButton";
 import Tooltip from "./components/items/Tooltip";
 import Accordion from "./components/items/Accordion";
+import Tabs from "./components/items/Tabs";
 
 function App() {
   const handleSwitchChange = (isChecked: boolean) => {
     console.log(`Switch is ${isChecked ? "on" : "off"}`);
   };
+
+  const tabs = [
+    {
+      id: "tab1",
+      label: "Tab 1",
+      content: <div>Contenu du Tab 1</div>,
+    },
+    {
+      id: "tab2",
+      label: "Tab 2",
+      content: <div>Contenu du Tab 2</div>,
+    },
+    {
+      id: "tab3",
+      label: "Tab 3",
+      content: <div>Contenu du Tab 3</div>,
+    },
+  ];
 
   return (
     <>
@@ -84,6 +103,7 @@ function App() {
         />
 
         <Title title="Tabs" />
+        <Tabs tabs={tabs} />
       </main>
     </>
   );
