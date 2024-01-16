@@ -1,6 +1,6 @@
 import "./index.css";
 
-import { Header } from "./components/header/Header";
+import Header from "./components/header/Header";
 import Title from "./components/items/Title";
 import Switch from "./components/items/Switch";
 import MenuButton from "./components/items/MenuButton";
