@@ -30,8 +30,8 @@ function App() {
         />
         <Title title="Menu Button" />
         <MenuButton
-          label={"Test"}
-          menuItems={["Test 1", "Test 2", "Test 3", "Test 4"]}
+          label={"Open me"}
+          menuItems={["Choice 1", "Choice 2", "Choice 3", "Choice 4"]}
         />
         <Title title="Tooltip" />
         <Tooltip text={"This is a tip"} button={"Hover me"} />

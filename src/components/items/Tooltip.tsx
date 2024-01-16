@@ -11,44 +11,43 @@ const Tooltip: React.FC<TooltipProps> = ({ text, button }) => {
 
   const handleMouseEnter = () => {
     setIsVisible(true);
+    addKeyListener();
   };
 
   const handleMouseLeave = () => {
     setIsVisible(false);
+    removeKeyListener();
   };
 
   const handleBlur = () => {
     setIsVisible(false);
+    removeKeyListener();
   };
 
   const handleFocus = () => {
     setIsVisible(true);
+    addKeyListener();
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === " ") {
       setIsVisible(false);
+      removeKeyListener();
     }
   };
 
+  const addKeyListener = () => {
+    document.addEventListener("keydown", handleKeyDown);
+  };
+
+  const removeKeyListener = () => {
+    document.removeEventListener("keydown", handleKeyDown);
+  };
+
   useEffect(() => {
-    const triggerElement = triggerRef.current;
-
-    if (triggerElement) {
-      triggerElement.addEventListener("mouseenter", handleMouseEnter);
-      triggerElement.addEventListener("mouseleave", handleMouseLeave);
-      triggerElement.addEventListener("blur", handleBlur);
-      triggerElement.addEventListener("focus", handleFocus);
-      triggerElement.addEventListener("keydown", handleKeyDown);
-
-      return () => {
-        triggerElement.removeEventListener("mouseenter", handleMouseEnter);
-        triggerElement.removeEventListener("mouseleave", handleMouseLeave);
-        triggerElement.removeEventListener("blur", handleBlur);
-        triggerElement.removeEventListener("focus", handleFocus);
-        triggerElement.removeEventListener("keydown", handleKeyDown);
-      };
-    }
+    return () => {
+      removeKeyListener();
+    };
   }, []);
 
   return (
@@ -57,7 +56,11 @@ const Tooltip: React.FC<TooltipProps> = ({ text, button }) => {
         ref={triggerRef}
         tabIndex={0}
         aria-describedby="tooltip"
-        className="inline-flex items-center justify-center ml-6 mt-6 h-6 p-6 font-medium tracking-wide bg-white text-black rounded shadow-md cursor-pointer"
+        className="inline-flex items-center justify-center ml-6 mt-6 h-6 p-6 font-medium tracking-wide bg-gray-50 text-gray-700 rounded shadow-md cursor-pointer"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       >
         {button}
       </div>
@@ -66,7 +69,7 @@ const Tooltip: React.FC<TooltipProps> = ({ text, button }) => {
         <div
           id="tooltip"
           role="tooltip"
-          className="absolute text-center mt-2 ml-6 bg-gray-800 opacity-90 text-white p-2 rounded"
+          className="absolute text-center mt-2 ml-6 bg-gray-800 opacity-90 text-gray-50 p-2 rounded"
         >
           {text}
         </div>
