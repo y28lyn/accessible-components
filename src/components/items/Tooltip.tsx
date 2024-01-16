@@ -56,7 +56,7 @@ const Tooltip: React.FC<TooltipProps> = ({ text, button }) => {
         ref={triggerRef}
         tabIndex={0}
         aria-describedby="tooltip"
-        className="inline-flex items-center justify-center h-6 p-6 font-medium tracking-wide bg-gray-50 text-gray-700 rounded shadow-md cursor-pointer"
+        className="inline-flex items-center justify-center h-6 p-6 font-medium tracking-wide bg-gray-50 text-gray-700 rounded shadow-md cursor-pointer focus:outline-none focus:ring hover:ring"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onFocus={handleFocus}
