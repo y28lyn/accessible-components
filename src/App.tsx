@@ -17,17 +17,17 @@ function App() {
     {
       id: "tab1",
       label: "Tab 1",
-      content: <div>Contenu du Tab 1</div>,
+      content: <div>Tab 1 contents</div>,
     },
     {
       id: "tab2",
       label: "Tab 2",
-      content: <div>Contenu du Tab 2</div>,
+      content: <div>Tab 2 contents</div>,
     },
     {
       id: "tab3",
       label: "Tab 3",
-      content: <div>Contenu du Tab 3</div>,
+      content: <div>Tab 3 contents</div>,
     },
   ];
 
