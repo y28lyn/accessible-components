@@ -16,7 +16,7 @@ function App() {
         <Header />
       </header>
 
-      <main id="main" className="h-screen bg-[#121315]">
+      <main id="main" className="bg-[#121315]">
         <Title title="Switch" />
         <Switch
           label="Notifications"
@@ -24,7 +24,13 @@ function App() {
           onChange={handleSwitchChange}
         />
         <Title title="Menu Button" />
-        <MenuButton label={"Test"} menuItems={["Test 1", "Test 2"]} />
+        <MenuButton
+          label={"Test"}
+          menuItems={["Test 1", "Test 2", "Test 3", "Test 4"]}
+        />
+        <Title title="Tooltip" />
+        <Title title="Accordion" />
+        <Title title="Tabs" />
       </main>
     </>
   );

@@ -13,11 +13,15 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
 
   const handleButtonClick = () => {
     setIsMenuOpen(!isMenuOpen);
-    setFocusedIndex(isMenuOpen ? -1 : 0);
+    if (!isMenuOpen) {
+      setFocusedIndex(0); // Set focus on the first item when the menu opens
+    } else {
+      setFocusedIndex(-1);
+      menuButtonRef.current?.focus(); // Return focus to the button when the menu closes
+    }
   };
 
   const handleMenuItemClick = (index: number) => {
-    // Handle menu item click logic here
     console.log(`Clicked on menu item: ${menuItems[index]}`);
     closeMenu();
   };
@@ -81,6 +85,21 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    if (isMenuOpen && focusedIndex !== -1) {
+      // Query for all the focusable child items
+      const menuItems = menuRef.current?.querySelectorAll(
+        'li[role="menuitem"]'
+      );
+      // Type assertion to HTMLElement
+      const focusedItem = menuItems?.[focusedIndex];
+
+      if (focusedItem && focusedItem instanceof HTMLElement) {
+        focusedItem.focus();
+      }
+    }
+  }, [focusedIndex, isMenuOpen]);
+
   return (
     <div className="p-6 relative inline-block text-left">
       <button
@@ -90,6 +109,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
         aria-haspopup="true"
         aria-controls="menu"
         aria-expanded={isMenuOpen}
+        tabIndex={0} // Make sure the button is focusable
         className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         {label} {isMenuOpen ? "▲" : "▼"}
