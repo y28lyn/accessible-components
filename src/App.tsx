@@ -8,9 +8,9 @@ import Tooltip from "./components/items/Tooltip";
 import Accordion from "./components/items/Accordion";
 import Tabs from "./components/items/Tabs";
 
-function App() {
-  const handleSwitchChange = (isChecked: boolean) => {
-    console.log(`Switch is ${isChecked ? "on" : "off"}`);
+const App = () => {
+  const handleSwitchChange = (checked: boolean) => {
+    console.log(`Switch is ${checked ? "on" : "off"}`);
   };
 
   const tabs = [
@@ -107,6 +107,6 @@ function App() {
       </main>
     </>
   );
-}
+};
 
 export default App;

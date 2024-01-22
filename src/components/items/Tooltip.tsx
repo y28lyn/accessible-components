@@ -1,79 +1,14 @@
-import { useState, useRef, useEffect } from "react";
+import UITooltip from "../ui/UITooltip";
 
-interface TooltipProps {
-  text: string;
-  button: string;
-}
-
-const Tooltip: React.FC<TooltipProps> = ({ text, button }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const triggerRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseEnter = () => {
-    setIsVisible(true);
-    addKeyListener();
-  };
-
-  const handleMouseLeave = () => {
-    setIsVisible(false);
-    removeKeyListener();
-  };
-
-  const handleBlur = () => {
-    setIsVisible(false);
-    removeKeyListener();
-  };
-
-  const handleFocus = () => {
-    setIsVisible(true);
-    addKeyListener();
-  };
-
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === " ") {
-      setIsVisible(false);
-      removeKeyListener();
-    }
-  };
-
-  const addKeyListener = () => {
-    document.addEventListener("keydown", handleKeyDown);
-  };
-
-  const removeKeyListener = () => {
-    document.removeEventListener("keydown", handleKeyDown);
-  };
-
-  useEffect(() => {
-    return () => {
-      removeKeyListener();
-    };
-  }, []);
-
+const Tooltip = () => {
   return (
     <div className="relative inline-block p-6">
-      <div
-        ref={triggerRef}
-        tabIndex={0}
-        aria-describedby="tooltip"
-        className="inline-flex items-center justify-center h-6 p-6 font-medium tracking-wide bg-gray-50 text-gray-700 rounded shadow-md cursor-pointer focus:outline-none focus:ring hover:ring"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      >
-        {button}
-      </div>
-
-      {isVisible && (
-        <div
-          id="tooltip"
-          role="tooltip"
-          className="absolute text-center mt-2 bg-gray-800 opacity-90 text-gray-50 p-2 rounded"
-        >
-          {text}
-        </div>
-      )}
+      <UITooltip
+        text="This is a tip"
+        button="Hover me"
+        buttonStyle="inline-flex items-center justify-center h-6 p-6 font-medium tracking-wide bg-gray-50 text-gray-700 rounded shadow-md cursor-pointer focus:outline-none focus:ring hover:ring"
+        bubbleStyle="absolute text-center mt-2 bg-gray-800 opacity-90 text-gray-50 p-2 rounded"
+      />
     </div>
   );
 };

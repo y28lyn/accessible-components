@@ -1,0 +1,11 @@
+{
+  // JavaScript
+  "javascript.validate.enable": false,
+
+  // Prettier
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // TypeScript
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.validate.enable": false
+}

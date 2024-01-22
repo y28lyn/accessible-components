@@ -69,7 +69,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
             aria-controls={tab.id}
             aria-selected={activeTab === tab.id}
             onClick={() => handleTabClick(tab.id)}
-            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyDown}
             tabIndex={activeTab === tab.id ? 0 : -1}
             className={`
             ${activeTab === tab.id ? "border-2 border-gray-800" : "border-1"}

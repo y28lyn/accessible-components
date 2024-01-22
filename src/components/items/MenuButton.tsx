@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface MenuButtonProps {
   label: string;
@@ -14,10 +14,10 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
   const handleButtonClick = () => {
     setIsMenuOpen(!isMenuOpen);
     if (!isMenuOpen) {
-      setFocusedIndex(0); // Set focus on the first item when the menu opens
+      setFocusedIndex(0);
     } else {
       setFocusedIndex(-1);
-      menuButtonRef.current?.focus(); // Return focus to the button when the menu closes
+      menuButtonRef.current?.focus();
     }
   };
 
@@ -30,20 +30,28 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
     switch (event.key) {
       case "ArrowDown":
         event.preventDefault();
-        setFocusedIndex((prevIndex) =>
-          prevIndex < menuItems.length - 1 ? prevIndex + 1 : 0
-        );
+        if (isMenuOpen) {
+          setFocusedIndex((prevIndex) =>
+            prevIndex < menuItems.length - 1 ? prevIndex + 1 : 0,
+          );
+        } else {
+          handleButtonClick();
+        }
         break;
       case "ArrowUp":
         event.preventDefault();
-        setFocusedIndex((prevIndex) =>
-          prevIndex > 0 ? prevIndex - 1 : menuItems.length - 1
-        );
+        if (isMenuOpen) {
+          setFocusedIndex((prevIndex) =>
+            prevIndex > 0 ? prevIndex - 1 : menuItems.length,
+          );
+        } else {
+          handleButtonClick();
+        }
         break;
       case "Enter":
       case "Space":
         event.preventDefault();
-        if (isMenuOpen && focusedIndex !== -1) {
+        if (isMenuOpen) {
           handleMenuItemClick(focusedIndex);
         } else {
           handleButtonClick();
@@ -53,8 +61,25 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
         event.preventDefault();
         closeMenu();
         break;
+      case "Home":
+        event.preventDefault();
+        setFocusedIndex(0);
+        break;
+      case "End":
+        event.preventDefault();
+        setFocusedIndex(menuItems.length - 1);
+        break;
       default:
-        // Handle other key presses here if needed
+        if (/^[a-zA-Z]$/.test(event.key)) {
+          event.preventDefault();
+          const char = event.key.toLowerCase();
+          const foundIndex = menuItems.findIndex((item) =>
+            item.toLowerCase().startsWith(char),
+          );
+          if (foundIndex !== -1) {
+            setFocusedIndex(foundIndex);
+          }
+        }
         break;
     }
   };
@@ -87,14 +112,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
 
   useEffect(() => {
     if (isMenuOpen && focusedIndex !== -1) {
-      // Query for all the focusable child items
-      const menuItems = menuRef.current?.querySelectorAll(
-        'li[role="menuitem"]'
-      );
-      // Type assertion to HTMLElement
-      const focusedItem = menuItems?.[focusedIndex];
+      const focusedItem = menuRef.current?.children[
+        focusedIndex
+      ] as HTMLElement;
 
-      if (focusedItem && focusedItem instanceof HTMLElement) {
+      if (focusedItem) {
         focusedItem.focus();
       }
     }
@@ -105,11 +127,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
       <button
         ref={menuButtonRef}
         onClick={handleButtonClick}
-        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyDown}
         aria-haspopup="true"
         aria-controls="menu"
         aria-expanded={isMenuOpen}
-        tabIndex={0} // Make sure the button is focusable
+        tabIndex={0}
         className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:ring focus:outline-none focus:ring"
       >
         {label} {isMenuOpen ? "▲" : "▼"}
@@ -127,9 +149,9 @@ const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
             <li
               key={index}
               role="menuitem"
-              tabIndex={index === focusedIndex ? 0 : -1}
+              tabIndex={0}
               onClick={() => handleMenuItemClick(index)}
-              onKeyDown={(e) => {
+              onKeyUp={(e) => {
                 if (e.key === "Enter" || e.key === "Space") {
                   e.preventDefault();
                   handleMenuItemClick(index);

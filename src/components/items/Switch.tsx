@@ -1,50 +1,44 @@
-import React, { useState } from "react";
+import { useState, type FormEventHandler } from "react";
 
-interface SwitchProps {
-  label: string;
+import UISwitch from "../ui/UISwitch";
+
+type SwitchProps = {
   defaultChecked?: boolean;
-  onChange: (isChecked: boolean) => void;
-}
+  label: string;
+  onChange: (checked: boolean) => void;
+};
 
-const Switch: React.FC<SwitchProps> = ({
-  label,
-  defaultChecked = false,
-  onChange,
-}) => {
-  const [isChecked, setChecked] = useState(defaultChecked);
+const Switch = ({ defaultChecked = false, label, onChange }: SwitchProps) => {
+  const [checked, setChecked] = useState(defaultChecked);
 
-  const handleToggle = () => {
-    const newCheckedState = !isChecked;
-    setChecked(newCheckedState);
-    onChange(newCheckedState);
+  const handleChange: FormEventHandler<HTMLDivElement> = () => {
+    const newChecked = !checked;
+
+    setChecked(newChecked);
+    onChange(newChecked);
   };
 
   return (
     <div className="flex items-center space-x-2 p-6">
       <label className="text-md text-white font-semibold">{label}</label>
-      <div
+
+      <UISwitch
         className={`relative w-10 h-6 bg-gray-300 rounded-full cursor-pointer transition-all duration-300 focus:outline-none focus:ring hover:ring ${
-          isChecked ? "bg-green-500" : "bg-gray-400"
+          checked ? "bg-green-500" : "bg-gray-400"
         }`}
-        onClick={handleToggle}
-        onKeyPress={(e) => {
-          if (e.key === " " || e.key === "Enter") {
-            handleToggle();
-          }
-        }}
-        role="switch"
-        aria-checked={isChecked}
-        tabIndex={0}
+        defaultChecked={defaultChecked}
+        onChange={handleChange}
       >
         <div
           className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-300 transform ${
-            isChecked ? "translate-x-4" : "translate-x-0"
+            checked ? "translate-x-4" : "translate-x-0"
           }`}
         />
-      </div>
+      </UISwitch>
+
       <span
         className={`text-md text-gray-400 font-semibold ${
-          isChecked ? "hidden" : "block"
+          checked ? "hidden" : "block"
         }`}
         aria-hidden="true"
       >
@@ -52,7 +46,7 @@ const Switch: React.FC<SwitchProps> = ({
       </span>
       <span
         className={`text-md text-green-500 font-semibold ${
-          isChecked ? "block" : "hidden"
+          checked ? "block" : "hidden"
         }`}
         aria-hidden="true"
       >
