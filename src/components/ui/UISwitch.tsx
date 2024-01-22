@@ -12,7 +12,7 @@ type Props = Omit<
   onChange: (checked: boolean) => void;
 };
 
-const Switch = ({
+const UISwitch = ({
   children,
   defaultChecked = false,
   onChange,
@@ -56,4 +56,4 @@ const Switch = ({
   );
 };
 
-export default Switch;
+export default UISwitch;

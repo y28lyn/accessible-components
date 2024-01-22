@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 
-interface MenuButtonProps {
+type MenuButtonProps = {
   label: string;
   menuItems: string[];
-}
+};
 
-const MenuButton: React.FC<MenuButtonProps> = ({ label, menuItems }) => {
+const MenuButton = ({ label, menuItems }: MenuButtonProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const menuButtonRef = useRef<HTMLButtonElement>(null);

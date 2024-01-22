@@ -13,35 +13,13 @@ const App = () => {
     console.log(`Switch is ${checked ? "on" : "off"}`);
   };
 
-  const tabs = [
-    {
-      id: "tab1",
-      label: "Tab 1",
-      content: <div>Tab 1 contents</div>,
-    },
-    {
-      id: "tab2",
-      label: "Tab 2",
-      content: <div>Tab 2 contents</div>,
-    },
-    {
-      id: "tab3",
-      label: "Tab 3",
-      content: <div>Tab 3 contents</div>,
-    },
-  ];
-
   return (
     <>
       <header>
         <Header />
       </header>
 
-      <main
-        id="main"
-        className="
-      bg-[#121315]"
-      >
+      <main id="main" className="bg-[#121315]">
         <Title title="Switch" />
         <Switch
           label="Notifications"
@@ -59,51 +37,10 @@ const App = () => {
         <Tooltip text={"This is a tip"} button={"Hover me"} />
 
         <Title title="Accordion" />
-        <Accordion
-          id="exampleAccordion"
-          title="Example Accordion"
-          items={[
-            { id: "item1", label: "Personnal Information", type: "fieldset" },
-            { id: "item2", label: "Default 1" },
-            { id: "item3", label: "Default 2" },
-          ]}
-          fieldsetContent={
-            <>
-              <fieldset>
-                <p>
-                  <label htmlFor="name" className="text-md font-medium">
-                    Name
-                    <span aria-hidden="true">*</span>:<br></br>
-                  </label>
-                  <input
-                    type="text"
-                    name="Name"
-                    id="name"
-                    aria-required="true"
-                    className="rounded border-[1.3px] border-[#121315]"
-                  />
-                </p>
-                <p>
-                  <label htmlFor="email" className="text-md font-medium">
-                    Email
-                    <span aria-hidden="true">*</span>:<br></br>
-                  </label>
-                  <input
-                    type="text"
-                    name="Email"
-                    id="email"
-                    aria-required="true"
-                    className="rounded border-[1.3px] border-[#121315]"
-                  />
-                </p>
-              </fieldset>
-            </>
-          }
-          defaultContent={<p>This is the default content.</p>}
-        />
+        <Accordion />
 
         <Title title="Tabs" />
-        <Tabs tabs={tabs} />
+        <Tabs />
       </main>
     </>
   );
