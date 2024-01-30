@@ -6,8 +6,9 @@
     "format": "prettier --write .",
     "lint": "eslint . && tsc",
     "serve:dev": "vite --host",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "react": "^18.2.0",

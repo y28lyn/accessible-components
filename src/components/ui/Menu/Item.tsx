@@ -1,31 +1,36 @@
 import {
-  useState,
+  useContext,
+  useEffect,
+  useRef,
+  type JSX,
   type KeyboardEventHandler,
   type MouseEventHandler,
-  type JSX,
 } from "react";
 
-type Props = Omit<
-  JSX.IntrinsicElements["div"],
-  "aria-checked" | "onChange" | "role" | "tabIndex"
-> & {
-  onChange?: (checked: boolean) => void;
+import { MenuContext } from ".";
+
+type Props = Omit<JSX.IntrinsicElements["div"], "role" | "tabIndex"> & {
+  disabled?: boolean;
+  index: number;
 };
 
-const UISwitch = ({
+const Item = ({
   children,
-  defaultChecked = false,
-  onChange = () => undefined,
+  disabled = false,
+  index,
   onClick = () => undefined,
   onKeyDownCapture = () => undefined,
   onKeyUp = () => undefined,
   ...rest
 }: Props) => {
-  const [checked, setChecked] = useState(defaultChecked);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const context = useContext(MenuContext);
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
     onClick(event);
-    toggle();
+
+    closeMenu();
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
@@ -42,25 +47,32 @@ const UISwitch = ({
     if (event.key === " " || event.key === "Enter") {
       event.preventDefault();
 
-      toggle();
+      closeMenu();
     }
   };
 
-  const toggle = () => {
-    const newChecked = !checked;
-
-    setChecked(newChecked);
-    onChange(newChecked);
+  const closeMenu = () => {
+    context?.setState((state) => ({
+      ...state,
+      expanded: false,
+    }));
   };
+
+  useEffect(() => {
+    if (context?.state.focusedIndex === index) {
+      ref.current?.focus();
+    }
+  }, [context?.state.focusedIndex, index]);
 
   return (
     <div
-      aria-checked={checked}
+      aria-disabled={disabled}
       onClick={handleClick}
       onKeyDownCapture={handleKeyDown}
       onKeyUp={handleKeyUp}
-      role="switch"
-      tabIndex={0}
+      ref={ref}
+      role="menuitem"
+      tabIndex={-1}
       {...rest}
     >
       {children}
@@ -68,4 +80,4 @@ const UISwitch = ({
   );
 };
 
-export default UISwitch;
+export default Item;

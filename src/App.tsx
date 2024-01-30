@@ -30,7 +30,7 @@ const App = () => {
         <Title title="Menu Button" />
         <MenuButton
           label={"Open me"}
-          menuItems={["Choice 1", "Choice 2", "Choice 3", "Choice 4"]}
+          menuItems={["Ahoice 1", "Bhoice 2", "Bhoice 3", "Dhoice 4"]}
         />
 
         <Title title="Tooltip" />

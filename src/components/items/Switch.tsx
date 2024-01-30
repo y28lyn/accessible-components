@@ -20,9 +20,12 @@ const Switch = ({ defaultChecked = false, label, onChange }: SwitchProps) => {
 
   return (
     <div className="flex items-center space-x-2 p-6">
-      <label className="text-md text-white font-semibold">{label}</label>
+      <label id="label" className="text-md text-white font-semibold">
+        {label}
+      </label>
 
       <UISwitch
+        aria-labelledby="label"
         className={`relative w-10 h-6 bg-gray-300 rounded-full cursor-pointer transition-all duration-300 focus:outline-none focus:ring hover:ring ${
           checked ? "bg-green-500" : "bg-gray-400"
         }`}
