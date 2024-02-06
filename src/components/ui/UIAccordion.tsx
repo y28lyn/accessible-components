@@ -45,8 +45,8 @@ const UIAccordion = ({
                 onClick={() => toggleAccordion(item.id)}
                 className={buttonStyle}
               >
-                <span className={labelStyle}>{item.label}</span>
                 {expandedItem === item.id ? "▲" : "▼"}
+                <span className={labelStyle}>{item.label}</span>
               </button>
             </h3>
             <div

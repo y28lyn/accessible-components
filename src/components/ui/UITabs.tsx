@@ -80,6 +80,7 @@ const UITabs = ({
             {tab.label}
           </button>
         ))}
+
         {tabs.map((tab) => (
           <div
             key={tab.id}

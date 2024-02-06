@@ -45,7 +45,7 @@ const Accordion = () => {
         defaultContent={<p>This is the default content.</p>}
         containerStyle="bg-gray-50 w-[15em] p-2 rounded shadow-md"
         buttonStyle="inline-flex items-center justify-center text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        labelStyle="mr-2"
+        labelStyle="mx-2"
         fieldsetStyle="mb-2"
       />
     </section>
