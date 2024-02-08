@@ -26,6 +26,7 @@ describe("UIAccordion component", () => {
     fieldsetStyle: "accordion-fieldset",
   };
 
+  // TO-DO séparer les tests
   it("renders accordion items with proper attributes and content", async () => {
     render(<UIAccordion {...accordionProps} />);
     await waitFor(() => {
@@ -47,6 +48,7 @@ describe("UIAccordion component", () => {
     });
   });
 
+  // TO-DO séparer les tests
   it("toggles accordion items when clicked", async () => {
     render(<UIAccordion {...accordionProps} />);
     await waitFor(() => {

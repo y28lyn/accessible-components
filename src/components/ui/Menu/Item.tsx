@@ -1,5 +1,4 @@
 import {
-  useContext,
   useEffect,
   useRef,
   type JSX,
@@ -7,7 +6,7 @@ import {
   type MouseEventHandler,
 } from "react";
 
-import { MenuContext } from ".";
+import { useMenu } from ".";
 
 type Props = Omit<JSX.IntrinsicElements["div"], "role" | "tabIndex"> & {
   disabled?: boolean;
@@ -25,7 +24,7 @@ const Item = ({
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const context = useContext(MenuContext);
+  const context = useMenu();
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
     onClick(event);
@@ -52,17 +51,17 @@ const Item = ({
   };
 
   const closeMenu = () => {
-    context?.setState((state) => ({
+    context.setState((state) => ({
       ...state,
       expanded: false,
     }));
   };
 
   useEffect(() => {
-    if (context?.state.focusedIndex === index) {
+    if (context.state.focusedIndex === index) {
       ref.current?.focus();
     }
-  }, [context?.state.focusedIndex, index]);
+  }, [context.state.focusedIndex, index]);
 
   return (
     <div

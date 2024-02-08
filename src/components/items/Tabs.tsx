@@ -1,37 +1,57 @@
-import UITabs from "../ui/UITabs";
+import UITabs from "../ui/Tabs";
 
 const Tabs = () => {
   const tabs = [
     {
-      id: "tab1",
-      label: "Tab 1",
-      content: <div>Tab 1 contents</div>,
+      tabId: "tab1",
+      tabContent: "Tab 1",
+      panelId: "panel1",
+      panelContent: <div>Tab 1 contents</div>,
     },
     {
-      id: "tab2",
-      label: "Tab 2",
-      content: <div>Tab 2 contents</div>,
+      tabId: "tab2",
+      tabContent: "Tab 2",
+      panelId: "panel2",
+      panelContent: <div>Tab 2 contents</div>,
     },
     {
-      id: "tab3",
-      label: "Tab 3",
-      content: <div>Tab 3 contents</div>,
-    },
-    {
-      id: "tab4",
-      label: "Tab 4",
-      content: <div>Tab 4 contents</div>,
+      tabId: "tab3",
+      tabContent: "Tab 3",
+      panelId: "panel3",
+      panelContent: <div>Tab 3 contents</div>,
     },
   ];
 
   return (
     <section className="p-6">
-      <UITabs
-        containerStyle="bg-gray-50 rounded p-4"
-        contentStyle="p-4 border border-gray-800 bg-gray-50 text-gray-700"
-        titleStyle="px-4 font-semibold bg-gray-50 text-gray-700"
-        tabs={tabs}
-      />
+      <UITabs>
+        <UITabs.List className="bg-gray-50 rounded p-4">
+          {tabs.map((tab) => (
+            <UITabs.Tab
+              // active={activeTab === tab.id}
+              key={tab.tabId}
+              // tabIndex={activeTab === tab.tabId ? 0 : -1}
+              // className="px-4 font-semibold bg-gray-50 text-gray-700"
+              panelId={tab.panelId}
+              tabId={tab.tabId}
+            >
+              {tab.tabContent}
+            </UITabs.Tab>
+          ))}
+        </UITabs.List>
+
+        {tabs.map((tab) => (
+          <UITabs.Panel
+            // active={activeTab === tab.id}
+            // className="p-4 border border-gray-800 bg-gray-50 text-gray-700"
+            key={tab.panelId}
+            panelId={tab.panelId}
+            tabId={tab.tabId}
+          >
+            {tab.panelContent}
+          </UITabs.Panel>
+        ))}
+      </UITabs>
     </section>
   );
 };

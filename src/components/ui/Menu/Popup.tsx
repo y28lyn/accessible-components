@@ -1,6 +1,6 @@
-import { useContext, type JSX, type KeyboardEventHandler } from "react";
+import type { JSX, KeyboardEventHandler } from "react";
 
-import { MenuContext } from ".";
+import { useMenu } from ".";
 
 type Props = Omit<JSX.IntrinsicElements["div"], "role">;
 
@@ -10,7 +10,7 @@ const Popup = ({
   onKeyUp = () => undefined,
   ...rest
 }: Props) => {
-  const context = useContext(MenuContext);
+  const context = useMenu();
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
     onKeyDownCapture(event);
@@ -25,19 +25,17 @@ const Popup = ({
       case "ArrowDown": {
         event.preventDefault();
 
-        if (context !== null) {
-          if (context.state.wrapping) {
-            if (context.state.focusedIndex === context.state.items.length - 1) {
-              moveFocusTo("first");
-            } else {
-              moveFocusTo("next");
-            }
-          } else if (
-            context.state.focusedIndex !==
-            context.state.items.length - 1
-          ) {
+        if (context.state.wrapping) {
+          if (context.state.focusedIndex === context.state.items.length - 1) {
+            moveFocusTo("first");
+          } else {
             moveFocusTo("next");
           }
+        } else if (
+          context.state.focusedIndex !==
+          context.state.items.length - 1
+        ) {
+          moveFocusTo("next");
         }
         break;
       }
@@ -45,16 +43,14 @@ const Popup = ({
       case "ArrowUp": {
         event.preventDefault();
 
-        if (context !== null) {
-          if (context.state.wrapping) {
-            if (context.state.focusedIndex === 0) {
-              moveFocusTo("last");
-            } else {
-              moveFocusTo("previous");
-            }
-          } else if (context.state.focusedIndex !== 0) {
+        if (context.state.wrapping) {
+          if (context.state.focusedIndex === 0) {
+            moveFocusTo("last");
+          } else {
             moveFocusTo("previous");
           }
+        } else if (context.state.focusedIndex !== 0) {
+          moveFocusTo("previous");
         }
         break;
       }
@@ -89,29 +85,27 @@ const Popup = ({
         if (event.key.match(/^\w/) !== null) {
           const pattern = new RegExp(`^${event.key.charAt(0)}`, "i");
 
-          if (context !== null) {
-            let index = findIndex(
+          let index = findIndex(
+            context.state.items,
+            context.state.focusedIndex + 1,
+            context.state.items.length,
+            (item) => item.match(pattern) !== null,
+          );
+
+          if (index === -1) {
+            index = findIndex(
               context.state.items,
-              context.state.focusedIndex + 1,
-              context.state.items.length,
+              0,
+              context.state.focusedIndex,
               (item) => item.match(pattern) !== null,
             );
+          }
 
-            if (index === -1) {
-              index = findIndex(
-                context.state.items,
-                0,
-                context.state.focusedIndex,
-                (item) => item.match(pattern) !== null,
-              );
-            }
-
-            if (index !== -1) {
-              context?.setState((state) => ({
-                ...state,
-                focusedIndex: index,
-              }));
-            }
+          if (index !== -1) {
+            context.setState((state) => ({
+              ...state,
+              focusedIndex: index,
+            }));
           }
         }
         break;
@@ -137,7 +131,7 @@ const Popup = ({
   const moveFocusTo = (target: "first" | "last" | "next" | "previous") => {
     switch (target) {
       case "first": {
-        context?.setState((state) => ({
+        context.setState((state) => ({
           ...state,
           focusedIndex: 0,
         }));
@@ -145,7 +139,7 @@ const Popup = ({
       }
 
       case "last": {
-        context?.setState((state) => ({
+        context.setState((state) => ({
           ...state,
           focusedIndex: state.items.length - 1,
         }));
@@ -153,7 +147,7 @@ const Popup = ({
       }
 
       case "next": {
-        context?.setState((state) => ({
+        context.setState((state) => ({
           ...state,
           focusedIndex: state.focusedIndex + 1,
         }));
@@ -161,7 +155,7 @@ const Popup = ({
       }
 
       case "previous": {
-        context?.setState((state) => ({
+        context.setState((state) => ({
           ...state,
           focusedIndex: state.focusedIndex - 1,
         }));
@@ -171,7 +165,7 @@ const Popup = ({
   };
 
   return (
-    context?.state.expanded && (
+    context.state.expanded && (
       <div
         onKeyDownCapture={handleKeyDown}
         onKeyUp={handleKeyUp}

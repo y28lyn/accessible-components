@@ -1,5 +1,6 @@
 import {
   createContext,
+  useContext,
   useState,
   type Dispatch,
   type JSX,
@@ -29,7 +30,17 @@ type State = {
   wrapping: Required<Props["wrapping"]>;
 };
 
-export const MenuContext = createContext<Context>(null);
+const MenuContext = createContext<Context>(null);
+
+export const useMenu = () => {
+  const context = useContext(MenuContext);
+
+  if (context === null) {
+    throw new Error("This component must be used inside the Menu component");
+  }
+
+  return context;
+};
 
 const Menu = ({
   children,

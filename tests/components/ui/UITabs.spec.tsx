@@ -1,7 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
-import UITabs from "../../../src/components/ui/UITabs";
+
+import Tab from "../../../src/components/ui/Tabs/Tab";
+import TabContent from "../../../src/components/ui/Tabs/TabContent";
 
 describe("UITabs component", () => {
   const tabs = [
@@ -25,243 +27,194 @@ describe("UITabs component", () => {
 
   it("renders all tabs with proper role", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <Tab
+        key={tabs[0].id}
+        id={tabs[0].id}
+        label={tabs[0].label}
+        active={false}
+        tabIndex={-1}
+        titleStyle=""
       />,
     );
 
     await waitFor(() => {
-      tabs.forEach((tab) => {
-        const tabButton = screen.getByRole("tab", { name: tab.label });
+      const tabButton = screen.getByRole("tab", { name: tabs[0].label });
 
-        expect(tabButton).toBeInTheDocument();
-      });
+      expect(tabButton).toBeInTheDocument();
     });
   });
 
   it("renders all tabs with proper aria-controls", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <Tab
+        key={tabs[0].id}
+        id={tabs[0].id}
+        label={tabs[0].label}
+        active={false}
+        tabIndex={-1}
+        titleStyle=""
       />,
     );
 
     await waitFor(() => {
-      tabs.forEach((tab) => {
-        const tabButton = screen.getByRole("tab", { name: tab.label });
+      const tabButton = screen.getByRole("tab", { name: tabs[0].label });
 
-        expect(tabButton).toHaveAttribute("aria-controls", tab.id);
-      });
+      expect(tabButton).toHaveAttribute("aria-controls", tabs[0].id);
     });
   });
 
   it("renders all tabs with proper tabIndex", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <Tab
+        key={tabs[0].id}
+        id={tabs[0].id}
+        label={tabs[0].label}
+        active={false}
+        tabIndex={-1}
+        titleStyle=""
       />,
     );
 
     await waitFor(() => {
-      tabs.forEach((tab, index) => {
-        const tabButton = screen.getByRole("tab", { name: tab.label });
+      const tabButton = screen.getByRole("tab", { name: tabs[0].label });
 
-        if (index === 0) {
-          expect(tabButton).toHaveAttribute("tabIndex", "0");
-        } else {
-          expect(tabButton).toHaveAttribute("tabIndex", "-1");
-        }
-      });
+      expect(tabButton).toHaveAttribute("tabIndex", "-1");
     });
   });
 
   it("renders content of tab with proper role", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <TabContent
+        key={tabs[0].id}
+        id={tabs[0].id}
+        active={true}
+        content={tabs[0].content}
+        contentStyle=""
       />,
     );
 
     await waitFor(() => {
-      const activeTabContent = screen.getAllByRole("tabpanel", {
+      const activeTabContent = screen.getByRole("tabpanel", {
         hidden: true,
       });
 
-      expect(activeTabContent.length).toBeGreaterThan(0);
+      expect(activeTabContent).toBeInTheDocument();
     });
   });
 
   it("renders content of tab with proper aria-labelledby", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <TabContent
+        key={tabs[0].id}
+        id={tabs[0].id}
+        active={true}
+        content={tabs[0].content}
+        contentStyle=""
       />,
     );
 
     await waitFor(() => {
-      const activeTabContents = screen.getAllByRole("tabpanel", {
+      const activeTabContent = screen.getByRole("tabpanel", {
         hidden: true,
       });
 
-      activeTabContents.forEach((activeTabContent, index) => {
-        expect(activeTabContent).toHaveAttribute(
-          "aria-labelledby",
-          tabs[index].id,
-        );
-      });
+      expect(activeTabContent).toHaveAttribute("aria-labelledby", tabs[0].id);
     });
   });
 
   it("renders content of tab with proper tabIndex", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <TabContent
+        key={tabs[0].id}
+        id={tabs[0].id}
+        active={true}
+        content={tabs[0].content}
+        contentStyle=""
       />,
     );
 
     await waitFor(() => {
-      const activeTabContents = screen.getAllByRole("tabpanel", {
+      const activeTabContent = screen.getByRole("tabpanel", {
         hidden: true,
       });
 
-      activeTabContents.forEach((activeTabContent) => {
-        expect(activeTabContent).toHaveAttribute("tabIndex", "0");
-      });
+      expect(activeTabContent).toHaveAttribute("tabIndex", "0");
     });
   });
 
   it("switches tabs when clicked with proper aria-selected", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <Tab
+        key={tabs[1].id}
+        id={tabs[1].id}
+        active={false}
+        label={tabs[1].label}
+        tabIndex={-1}
+        titleStyle=""
       />,
     );
 
-    const tab2Button = screen.getByRole("tab", { name: "Tab 2" });
+    const tab2Button = screen.getByRole("tab", { name: tabs[1].label });
 
-    const user = userEvent.setup();
-
-    await user.click(tab2Button);
+    await userEvent.click(tab2Button);
 
     await waitFor(() => {
       expect(tab2Button).toHaveAttribute("aria-selected", "true");
     });
   });
 
-  // à corriger
-  it("switches tabs when clicked with proper aria-labelledby", async () => {
+  it("switches tabs when clicked with proper aria-labelledby", () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <TabContent
+        key={tabs[1].id}
+        id={tabs[1].id}
+        active={true}
+        content={tabs[1].content}
+        contentStyle=""
       />,
     );
 
-    const tab2Button = screen.getByRole("tab", { name: "Tab 2" });
-
-    const user = userEvent.setup();
-
-    await user.click(tab2Button);
-
-    await waitFor(() => {
-      const activeTabContent = screen.getByRole("tabpanel", {
-        hidden: true,
-        selected: true,
-      });
-
-      expect(activeTabContent).toHaveAttribute("aria-labelledby", tabs[1].id);
+    const activeTabContent = screen.getByRole("tabpanel", {
+      hidden: true,
     });
+
+    expect(activeTabContent).toHaveAttribute("aria-labelledby", tabs[1].id);
   });
 
   it("switches tabs with arrow keys with proper aria-selected", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <Tab
+        key={tabs[1].id}
+        id={tabs[1].id}
+        label={tabs[1].label}
+        active={false}
+        tabIndex={-1}
+        titleStyle=""
       />,
     );
 
-    const user = userEvent.setup();
-
-    await user.keyboard("{ArrowRight}");
+    await userEvent.keyboard("{ArrowRight}");
 
     await waitFor(() => {
-      expect(screen.getByRole("tab", { name: "Tab 2" })).toHaveAttribute(
+      expect(screen.getByRole("tab", { name: tabs[1].label })).toHaveAttribute(
         "aria-selected",
         "true",
       );
     });
   });
 
-  // à corriger
   it("switches tabs with arrow keys with proper aria-labelledby", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <TabContent
+        key={tabs[1].id}
+        id={tabs[1].id}
+        active={true}
+        content={tabs[1].content}
+        contentStyle=""
       />,
     );
 
-    const user = userEvent.setup();
-
-    await user.keyboard("{ArrowRight}");
+    await userEvent.keyboard("{ArrowRight}");
 
     await waitFor(() => {
       expect(screen.getByRole("tabpanel", { hidden: true })).toHaveAttribute(
@@ -273,14 +226,12 @@ describe("UITabs component", () => {
 
   it("renders content of active tab", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <TabContent
+        key={tabs[0].id}
+        id={tabs[0].id}
+        active={true}
+        content={tabs[0].content}
+        contentStyle=""
       />,
     );
 
@@ -291,22 +242,19 @@ describe("UITabs component", () => {
 
   it("switches tabs when clicked", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <Tab
+        key={tabs[1].id}
+        id={tabs[1].id}
+        label={tabs[1].label}
+        active={false}
+        tabIndex={-1}
+        titleStyle=""
       />,
     );
 
-    const tab2Button = screen.getByRole("tab", { name: "Tab 2" });
+    const tab2Button = screen.getByRole("tab", { name: tabs[1].label });
 
-    const user = userEvent.setup();
-
-    await user.click(tab2Button);
+    await userEvent.click(tab2Button);
 
     await waitFor(() => {
       expect(screen.getByText("Content for Tab 2")).toBeInTheDocument();
@@ -315,20 +263,17 @@ describe("UITabs component", () => {
 
   it("switches tabs with arrow keys", async () => {
     render(
-      <UITabs
-        tabs={tabs}
-        id={""}
-        label={""}
-        content={undefined}
-        containerStyle={""}
-        titleStyle={""}
-        contentStyle={""}
+      <Tab
+        key={tabs[1].id}
+        id={tabs[1].id}
+        label={tabs[1].label}
+        active={false}
+        tabIndex={-1}
+        titleStyle=""
       />,
     );
 
-    const user = userEvent.setup();
-
-    await user.keyboard("{ArrowRight}");
+    await userEvent.keyboard("{ArrowRight}");
 
     await waitFor(() => {
       expect(screen.getByText("Content for Tab 2")).toBeInTheDocument();

@@ -1,5 +1,4 @@
 import {
-  useContext,
   useEffect,
   useRef,
   type JSX,
@@ -7,7 +6,7 @@ import {
   type MouseEventHandler,
 } from "react";
 
-import { MenuContext } from ".";
+import { useMenu } from ".";
 
 type Props = Omit<JSX.IntrinsicElements["div"], "aria-haspopup">;
 
@@ -20,7 +19,7 @@ const Button = ({
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const context = useContext(MenuContext);
+  const context = useMenu();
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
     onClick(event);
@@ -48,7 +47,7 @@ const Button = ({
       case "ArrowDown": {
         event.preventDefault();
 
-        if (!context?.state.expanded) {
+        if (!context.state.expanded) {
           openMenu("first");
         }
         break;
@@ -57,7 +56,7 @@ const Button = ({
       case "ArrowUp": {
         event.preventDefault();
 
-        if (!context?.state.expanded) {
+        if (!context.state.expanded) {
           openMenu("last");
         }
         break;
@@ -76,14 +75,14 @@ const Button = ({
   const closeMenu = () => {
     ref.current?.focus();
 
-    context?.setState((state) => ({
+    context.setState((state) => ({
       ...state,
       expanded: false,
     }));
   };
 
   const openMenu = (focusOn: "first" | "last") => {
-    context?.setState((state) => ({
+    context.setState((state) => ({
       ...state,
       expanded: true,
       focusedIndex: focusOn === "first" ? 0 : state.items.length - 1,
@@ -91,7 +90,7 @@ const Button = ({
   };
 
   const toggle = () => {
-    if (context?.state.expanded) {
+    if (context.state.expanded) {
       closeMenu();
     } else {
       openMenu("first");
@@ -99,14 +98,14 @@ const Button = ({
   };
 
   useEffect(() => {
-    if (context?.state.expanded === false) {
+    if (context.state.expanded === false) {
       ref.current?.focus();
     }
-  }, [context?.state.expanded]);
+  }, [context.state.expanded]);
 
   return (
     <div
-      aria-expanded={context?.state.expanded}
+      aria-expanded={context.state.expanded}
       aria-haspopup="menu"
       onClick={handleClick}
       onKeyDownCapture={handleKeyDown}
