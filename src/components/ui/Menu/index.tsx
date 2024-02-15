@@ -12,10 +12,12 @@ import Button from "./Button";
 import Item from "./Item";
 import Popup from "./Popup";
 
-type Context = {
-  state: State;
-  setState: Dispatch<SetStateAction<State>>;
-} | null;
+type Context =
+  | {
+      state: State;
+      setState: Dispatch<SetStateAction<State>>;
+    }
+  | undefined;
 
 type Props = JSX.IntrinsicElements["div"] & {
   defaultExpanded?: boolean;
@@ -30,12 +32,12 @@ type State = {
   wrapping: Required<Props["wrapping"]>;
 };
 
-const MenuContext = createContext<Context>(null);
+const MenuContext = createContext<Context>(undefined);
 
 export const useMenu = () => {
   const context = useContext(MenuContext);
 
-  if (context === null) {
+  if (context === undefined) {
     throw new Error("This component must be used inside the Menu component");
   }
 

@@ -7,11 +7,25 @@ import MenuButton from "./components/items/MenuButton";
 import Tooltip from "./components/items/Tooltip";
 import Accordion from "./components/items/Accordion";
 import Tabs from "./components/items/Tabs";
+import Form from "./components/qcm/Form";
 
 const App = () => {
   const handleSwitchChange = (checked: boolean) => {
     console.log(`Switch is ${checked ? "on" : "off"}`);
   };
+
+  const formDescription = [
+    {
+      title: "Question 1",
+      type: "radio",
+      answers: ["Option 1", "Option 2", "Option 3"],
+    },
+    {
+      title: "Question 2",
+      type: "checkbox",
+      answers: ["Option A", "Option B", "Option C"],
+    },
+  ];
 
   return (
     <>
@@ -41,6 +55,9 @@ const App = () => {
 
         <Title title="Tabs" />
         <Tabs />
+
+        <Title title="Form" />
+        <Form formDescription={formDescription} />
       </main>
     </>
   );

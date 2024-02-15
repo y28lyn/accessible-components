@@ -25,32 +25,32 @@ const Tabs = () => {
   return (
     <section className="p-6">
       <UITabs>
-        <UITabs.List className="bg-gray-50 rounded p-4">
+        <UITabs.Manager>
+          <UITabs.List className="bg-gray-50 rounded p-4">
+            {tabs.map((tab, index) => (
+              <UITabs.Tab
+                active={index === 0}
+                className="px-4 font-semibold bg-gray-50 text-gray-700 rounded aria-selected:border-[1.5px] aria-selected:border-red-600"
+                key={tab.tabId}
+                panelId={tab.panelId}
+                tabId={tab.tabId}
+              >
+                {tab.tabContent}
+              </UITabs.Tab>
+            ))}
+          </UITabs.List>
+
           {tabs.map((tab) => (
-            <UITabs.Tab
-              // active={activeTab === tab.id}
-              key={tab.tabId}
-              // tabIndex={activeTab === tab.tabId ? 0 : -1}
-              // className="px-4 font-semibold bg-gray-50 text-gray-700"
+            <UITabs.Panel
+              className="p-4 border border-gray-800 bg-gray-50 text-gray-700"
+              key={tab.panelId}
               panelId={tab.panelId}
               tabId={tab.tabId}
             >
-              {tab.tabContent}
-            </UITabs.Tab>
+              {tab.panelContent}
+            </UITabs.Panel>
           ))}
-        </UITabs.List>
-
-        {tabs.map((tab) => (
-          <UITabs.Panel
-            // active={activeTab === tab.id}
-            // className="p-4 border border-gray-800 bg-gray-50 text-gray-700"
-            key={tab.panelId}
-            panelId={tab.panelId}
-            tabId={tab.tabId}
-          >
-            {tab.panelContent}
-          </UITabs.Panel>
-        ))}
+        </UITabs.Manager>
       </UITabs>
     </section>
   );

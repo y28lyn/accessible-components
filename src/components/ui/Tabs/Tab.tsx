@@ -1,4 +1,12 @@
-import { useEffect, useId, useState, type JSX } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type JSX,
+  type MouseEventHandler,
+} from "react";
 
 import { useTabs } from ".";
 
@@ -6,71 +14,93 @@ type Props = Omit<
   JSX.IntrinsicElements["button"],
   "aria-controls" | "aria-selected" | "id" | "role" | "tabIndex"
 > & {
-  // active: boolean;
-  // tabIndex: number;
+  active?: boolean;
   panelId: string;
   tabId: string;
 };
 
 export type State = {
-  panelId: string;
+  controls: string | undefined;
+  selected: boolean;
 };
 
 const Tab = ({
-  // active,
+  active = false,
   children,
-  // onClick,
-  // onKeyDown,
+  onClick = () => undefined,
   panelId,
-  // tabIndex,
   tabId,
   ...rest
 }: Props) => {
   const id = useId();
 
+  const ref = useRef<HTMLButtonElement>(null);
+
   const [state, setState] = useState<State>({
-    panelId: "",
+    controls: undefined,
+    selected: active,
   });
 
   const context = useTabs();
 
-  useEffect(() => {
-    const tab = context.state.tabs.find(
-      (item) => item.panel.id === panelId && item.tab.id === tabId,
-    );
+  const activate = useCallback(() => {
+    context.setState((state) => {
+      if (state.activeTabId !== id) {
+        ref.current?.focus();
 
-    if (tab !== undefined) {
-      tab.panel.setState((state) => ({ ...state, tabId: id }));
-      setState((state) => ({ ...state, panelId: tab.panel.id }));
-    } else {
-      context.setState((state) => ({
-        ...state,
-        tabs: context.state.tabs.toSpliced(0, 0, {
-          panel: {
-            id: "",
-            panelId,
-            setState: () => undefined,
-          },
-          tab: {
-            id,
-            setState,
-            tabId,
-          },
-        }),
-      }));
-    }
+        return { ...state, activeTabId: id };
+      }
+
+      return state;
+    });
+  }, [context, id]);
+
+  const registerTab = useCallback(() => {
+    context.setState((state) => {
+      const tab = state.tabs.find((tab) => tab.id === id);
+
+      if (tab === undefined) {
+        return {
+          ...state,
+          tabs: [
+            ...state.tabs,
+            {
+              id,
+              panelId,
+              setState,
+              tabId,
+            },
+          ],
+        };
+      }
+
+      return state;
+    });
   }, [context, id, panelId, tabId]);
+
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    onClick(event);
+
+    activate();
+  };
+
+  useEffect(() => {
+    if (active) {
+      activate();
+    }
+
+    registerTab();
+  }, []);
 
   return (
     <button
-      aria-controls={state.panelId}
-      // aria-selected={active}
-      // className={`${active ? "border-[1.5px] border-gray-800 rounded" : "border-0"} ${titleStyle}`}
+      aria-controls={state.controls}
+      aria-selected={state.selected}
       id={id}
-      // onClick={onClick}
-      // onKeyUp={onKeyDown}
+      onClick={handleClick}
+      ref={ref}
       role="tab"
-      // tabIndex={tabIndex}
+      tabIndex={state.selected ? 0 : -1}
       {...rest}
     >
       {children}

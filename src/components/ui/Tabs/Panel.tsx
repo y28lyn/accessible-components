@@ -1,63 +1,64 @@
-import { useEffect, useId, useState, type JSX } from "react";
+import { useCallback, useEffect, useId, useState, type JSX } from "react";
 
 import { useTabs } from ".";
 
 type Props = Omit<
   JSX.IntrinsicElements["div"],
-  "aria-labelledby" | "id" | "role" | "tabIndex"
+  "aria-label" | "aria-labelledby" | "id" | "role"
 > & {
-  // active: boolean;
-  // tabIndex: -1 | 0;
   panelId: string;
   tabId: string;
 };
 
 export type State = {
-  tabId: string;
+  labelledby: string | undefined;
 };
 
-const Panel = ({ active, children, panelId, tabId, ...rest }: Props) => {
+const Panel = ({ children, panelId, tabId, tabIndex = 0, ...rest }: Props) => {
   const id = useId();
 
   const [state, setState] = useState<State>({
-    tabId: "",
+    labelledby: undefined,
   });
 
   const context = useTabs();
 
-  useEffect(() => {
-    const tab = context.state.tabs.find(
-      (item) => item.panel.id === panelId && item.tab.id === tabId,
-    );
+  const tab = context.state.tabs.find((tab) => tab.tabId === tabId);
 
-    if (tab !== undefined) {
-      tab.tab.setState((state) => ({ ...state, panelId: id }));
-      setState((state) => ({ ...state, tabId: tab.tab.id }));
-    } else {
-      context.setState((state) => ({
-        ...state,
-        tabs: context.state.tabs.toSpliced(0, 0, {
-          panel: {
-            id,
-            panelId,
-            setState,
-          },
-          tab: {
-            id: "",
-            setState: () => undefined,
-            tabId,
-          },
-        }),
-      }));
-    }
+  const registerPanel = useCallback(() => {
+    context.setState((state) => {
+      const panel = state.panels.find((panel) => panel.id === id);
+
+      if (panel === undefined) {
+        return {
+          ...state,
+          panels: [
+            ...state.panels,
+            {
+              id,
+              panelId,
+              tabId,
+              setState,
+            },
+          ],
+        };
+      }
+
+      return state;
+    });
   }, [context, id, panelId, tabId]);
+
+  useEffect(() => {
+    registerPanel();
+  }, []);
 
   return (
     <div
-      aria-labelledby={state.tabId}
-      // className={`${active ? "block" : "hidden"} ${contentStyle}`}
+      aria-labelledby={state.labelledby}
+      hidden={tab?.id !== context.state.activeTabId}
       id={id}
       role="tabpanel"
+      tabIndex={tabIndex}
       {...rest}
     >
       {children}
