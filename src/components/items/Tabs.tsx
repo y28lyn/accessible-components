@@ -30,7 +30,7 @@ const Tabs = () => {
             {tabs.map((tab, index) => (
               <UITabs.Tab
                 active={index === 0}
-                className="px-4 font-semibold bg-gray-50 text-gray-700 rounded aria-selected:border-[1.5px] aria-selected:border-red-600"
+                className="px-4 font-semibold bg-gray-50 text-gray-700 rounded aria-selected:border-[1.5px] aria-selected:bg-slate-400"
                 key={tab.tabId}
                 panelId={tab.panelId}
                 tabId={tab.tabId}
@@ -42,7 +42,7 @@ const Tabs = () => {
 
           {tabs.map((tab) => (
             <UITabs.Panel
-              className="p-4 border border-gray-800 bg-gray-50 text-gray-700"
+              className="p-4 border border-gray-800 bg-gray-50 text-gray-700 rounded mt-2"
               key={tab.panelId}
               panelId={tab.panelId}
               tabId={tab.tabId}

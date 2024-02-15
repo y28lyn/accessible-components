@@ -1,3 +1,6 @@
+import { Formik, Field, Form } from "formik";
+import type { FormikHelpers } from "formik";
+
 type FormDescription = Question[];
 
 type Question = {
@@ -8,60 +11,85 @@ type Question = {
 
 type Props = {
   formDescription: FormDescription;
-  formStyle?: "default" | "inline";
+  formStyle?: string;
+  submitStyle?: string;
 };
 
-const Form = ({ formDescription, formStyle = "default" }: Props) => {
+const Formulary = ({ formDescription, formStyle, submitStyle }: Props) => {
+  const initialValues: Record<string, string> = formDescription.reduce(
+    (acc, question) => {
+      acc[question.title] = "";
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
+
   return (
-    <form
-      style={{ display: formStyle === "inline" ? "inline-block" : "block" }}
-    >
-      {formDescription.map((question, index) => {
-        switch (question.type) {
-          case "radio":
-            return (
-              <div key={index}>
-                <p>{question.title}</p>
-                {question.answers?.map((answer, index) => (
+    <>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(
+          values: Record<string, string>,
+          { setSubmitting }: FormikHelpers<Record<string, string>>,
+        ) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 500);
+        }}
+      >
+        <Form className={formStyle}>
+          {formDescription.map((question, index) => {
+            switch (question.type) {
+              case "radio":
+                return (
                   <div key={index}>
-                    <input
-                      type="radio"
-                      id={`${question.title}-${index}`}
-                      name={question.title}
-                      value={answer}
-                    />
-                    <label htmlFor={`${question.title}-${index}`}>
-                      {answer}
-                    </label>
+                    <p>{question.title}</p>
+                    {question.answers?.map((answer, ansIndex) => (
+                      <div key={ansIndex}>
+                        <Field
+                          type="radio"
+                          id={`${question.title}-${ansIndex}`}
+                          name={question.title}
+                          value={answer}
+                        />
+                        <label htmlFor={`${question.title}-${ansIndex}`}>
+                          {answer}
+                        </label>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            );
-          case "checkbox":
-            return (
-              <div key={index}>
-                <p>{question.title}</p>
-                {question.answers?.map((answer, index) => (
+                );
+              case "checkbox":
+                return (
                   <div key={index}>
-                    <input
-                      type="checkbox"
-                      id={`${question.title}-${index}`}
-                      name={question.title}
-                      value={answer}
-                    />
-                    <label htmlFor={`${question.title}-${index}`}>
-                      {answer}
-                    </label>
+                    <p>{question.title}</p>
+                    {question.answers?.map((answer, ansIndex) => (
+                      <div key={ansIndex}>
+                        <Field
+                          type="checkbox"
+                          id={`${question.title}-${ansIndex}`}
+                          name={question.title}
+                          value={answer}
+                        />
+                        <label htmlFor={`${question.title}-${ansIndex}`}>
+                          {answer}
+                        </label>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            );
-          default:
-            return null;
-        }
-      })}
-    </form>
+                );
+              default:
+                return null;
+            }
+          })}
+          <button className={submitStyle} type="submit">
+            Submit
+          </button>
+        </Form>
+      </Formik>
+    </>
   );
 };
 
-export default Form;
+export default Formulary;

@@ -7,7 +7,7 @@ import MenuButton from "./components/items/MenuButton";
 import Tooltip from "./components/items/Tooltip";
 import Accordion from "./components/items/Accordion";
 import Tabs from "./components/items/Tabs";
-import Form from "./components/qcm/Form";
+import Formulary from "./components/qcm/Form";
 
 const App = () => {
   const handleSwitchChange = (checked: boolean) => {
@@ -18,7 +18,7 @@ const App = () => {
     {
       title: "Question 1",
       type: "radio",
-      answers: ["Option 1", "Option 2", "Option 3"],
+      answers: ["Option 1", "Option 2"],
     },
     {
       title: "Question 2",
@@ -32,7 +32,6 @@ const App = () => {
       <header>
         <Header />
       </header>
-
       <main id="main" className="bg-[#121315]">
         <Title title="Switch" />
         <Switch
@@ -44,7 +43,7 @@ const App = () => {
         <Title title="Menu Button" />
         <MenuButton
           label={"Open me"}
-          menuItems={["Ahoice 1", "Bhoice 2", "Bhoice 3", "Dhoice 4"]}
+          menuItems={["Apple", "Banana", "Blueberry", "Durian"]}
         />
 
         <Title title="Tooltip" />
@@ -57,7 +56,13 @@ const App = () => {
         <Tabs />
 
         <Title title="Form" />
-        <Form formDescription={formDescription} />
+        <section className="p-6">
+          <Formulary
+            formStyle="p-6 w-fit flex flex-col gap-4 rounded bg-white items-center"
+            formDescription={formDescription}
+            submitStyle="bg-slate-800 text-white rounded hover:scale-105 duration-200 w-32 p-2"
+          />
+        </section>
       </main>
     </>
   );
