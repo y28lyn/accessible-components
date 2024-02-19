@@ -1,7 +1,7 @@
 const SideBar = () => {
   return (
     <>
-      <div className="flex flex-col top-0 left-0 w-64 border-r-[2px] text-white">
+      <div className="flex flex-col top-0 left-0 w-64 border-0 md:border-r-[2px] text-white">
         <div className="overflow-y-auto overflow-x-hidden flex-grow">
           <ul className="flex flex-col py-4 space-y-1">
             <li className="px-5">
