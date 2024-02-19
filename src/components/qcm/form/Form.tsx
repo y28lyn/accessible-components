@@ -42,20 +42,51 @@ const Form = ({
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
+            console.log("Réponses de l'utilisateur:", values);
+            console.log("Réponses correctes:", formDescription);
+
             const incorrectResponses: {
               question: string;
               correctAnswer: string;
             }[] = [];
             formDescription.forEach((question) => {
-              const userResponse = values[question.title];
-              if (
-                userResponse &&
-                !question.correctAnswers.includes(userResponse)
-              ) {
-                incorrectResponses.push({
-                  question: question.title,
-                  correctAnswer: question.correctAnswers.join(", "),
-                });
+              if (question.type === "checkbox") {
+                const userResponses = Object.entries(values)
+                  .filter(([key, value]) => key === question.title && value)
+                  .map(([key]) => key);
+
+                console.log(
+                  "Réponses de l'utilisateur pour",
+                  question.title + ":",
+                  userResponses,
+                );
+                console.log(
+                  "Réponses correctes pour",
+                  question.title + ":",
+                  question.correctAnswers,
+                );
+
+                const isAnyCorrect = userResponses.some((response) =>
+                  question.correctAnswers.includes(response),
+                );
+
+                if (!isAnyCorrect) {
+                  incorrectResponses.push({
+                    question: question.title,
+                    correctAnswer: question.correctAnswers.join(", "),
+                  });
+                }
+              } else {
+                const userResponse = values[question.title];
+                if (
+                  userResponse &&
+                  !question.correctAnswers.includes(userResponse)
+                ) {
+                  incorrectResponses.push({
+                    question: question.title,
+                    correctAnswer: question.correctAnswers.join(", "),
+                  });
+                }
               }
             });
             if (incorrectResponses.length === 0) {

@@ -57,41 +57,53 @@ const App = () => {
         className="min-h-screen flex flex-row flex-auto flex-shrink-0 antialiased bg-[#121315]"
       >
         <SideBar />
-        <div>
-          <Title title="Switch" />
-          <Switch
-            label="Notifications"
-            defaultChecked={true}
-            onChange={handleSwitchChange}
-          />
-
-          <Title title="Menu Button" />
-          <MenuButton
-            label={"Open me"}
-            menuItems={["Apple", "Banana", "Blueberry", "Durian"]}
-          />
-
-          <Title title="Tooltip" />
-          <Tooltip text={"This is a tip"} button={"Hover me"} />
-
-          <Title title="Accordion" />
-          <Accordion />
-
-          <Title title="Tabs" />
-          <Tabs />
-
-          <Title title="Form" />
-          <section className="p-6">
-            <Form
-              formDescription={formDescription}
-              formStyle="p-6 w-fit flex flex-col gap-4 rounded bg-white"
-              submitStyle="bg-slate-800 text-white rounded hover:scale-105 duration-200 w-32 p-2"
-              questionStyle="font-bold text-xl mb-2"
-              radioStyle="font-semibold"
-              checkboxStyle="font-semibold"
+        <ul>
+          <li id="switch">
+            <Title title="Switch" />
+            <Switch
+              label="Notifications"
+              defaultChecked={true}
+              onChange={handleSwitchChange}
             />
-          </section>
-        </div>
+          </li>
+
+          <li id="menubutton">
+            <Title title="Menu Button" />
+            <MenuButton
+              label={"Open me"}
+              menuItems={["Apple", "Banana", "Blueberry", "Durian"]}
+            />
+          </li>
+
+          <li id="tooltip">
+            <Title title="Tooltip" />
+            <Tooltip text={"This is a tip"} button={"Hover me"} />
+          </li>
+
+          <li id="accordion">
+            <Title title="Accordion" />
+            <Accordion />
+          </li>
+
+          <li id="tabs">
+            <Title title="Tabs" />
+            <Tabs />
+          </li>
+
+          <li id="form">
+            <Title title="Form" />
+            <div className="p-6">
+              <Form
+                formDescription={formDescription}
+                formStyle="p-6 w-fit flex flex-col gap-4 rounded bg-white"
+                submitStyle="bg-slate-800 text-white rounded hover:scale-105 duration-200 w-32 p-2"
+                questionStyle="font-bold text-xl mb-2"
+                radioStyle="font-semibold"
+                checkboxStyle="font-semibold"
+              />
+            </div>
+          </li>
+        </ul>
       </main>
     </>
   );

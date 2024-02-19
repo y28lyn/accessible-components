@@ -13,7 +13,7 @@ const SideBar = () => {
             </li>
             <li>
               <a
-                href="#main"
+                href="#switch"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -44,7 +44,7 @@ const SideBar = () => {
             </li>
             <li>
               <a
-                href="#main"
+                href="#menubutton"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -79,7 +79,7 @@ const SideBar = () => {
             </li>
             <li>
               <a
-                href="#main"
+                href="#tooltip"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -105,7 +105,7 @@ const SideBar = () => {
             </li>
             <li>
               <a
-                href="#main"
+                href="#accordion"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -185,7 +185,7 @@ const SideBar = () => {
             </li>
             <li>
               <a
-                href="#main"
+                href="#tabs"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -217,7 +217,7 @@ const SideBar = () => {
             </li>
             <li>
               <a
-                href="#main"
+                href="#form"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
