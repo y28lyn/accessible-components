@@ -17,7 +17,7 @@ const RadioButton = ({ id, name, value, label, style }: RadioProps) => (
       name={name}
       value={value}
       aria-checked={value === "true" ? "true" : "false"}
-      tabindex={0}
+      tabIndex={0}
     />
     <label htmlFor={id}>{label}</label>
   </div>

@@ -17,7 +17,7 @@ const Checkbox = ({ id, name, value, label, style }: CheckboxProps) => (
       name={name}
       value={value}
       aria-checked={value === "true" ? "true" : "false"}
-      tabindex={0}
+      tabIndex={0}
     />
     <label htmlFor={id}>{label}</label>
   </div>
