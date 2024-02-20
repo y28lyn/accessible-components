@@ -9,3 +9,18 @@
 ::-webkit-scrollbar {
   width: 0;
 }
+
+.sidebar {
+  transition: transform 0.3s ease;
+}
+
+.sidebar.open {
+  background-color: #121315;
+  transform: translateX(0);
+  z-index: 49;
+}
+
+.sidebar.closed {
+  display: none;
+  transform: translateX(-100%);
+}

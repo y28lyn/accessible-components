@@ -33,7 +33,7 @@ const Tooltip = ({ button, text }: Props) => {
   };
 
   return (
-    <div className="relative inline-block p-6">
+    <div className="inline-block p-6">
       <button
         aria-describedby="tooltip"
         className="inline-flex items-center justify-center h-6 p-6 font-medium tracking-wide bg-gray-50 text-gray-700 rounded shadow-md cursor-pointer focus:outline-none focus:ring hover:ring"

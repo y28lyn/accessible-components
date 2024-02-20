@@ -11,7 +11,7 @@ const MenuButton = ({ label, menuItems }: MenuButtonProps) => {
   };
 
   return (
-    <div className="p-6 relative inline-block text-left">
+    <div className="p-6 inline-block text-left">
       <Menu items={menuItems} wrapping={true}>
         <Menu.Button
           aria-controls="menu"

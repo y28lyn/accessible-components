@@ -1,7 +1,63 @@
+import { useState, useEffect } from "react";
+import "../index.css";
+
 const SideBar = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSidebarOpen(window.innerWidth >= 768);
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <div className="flex flex-col top-0 left-0 w-64 border-0 md:border-r-[2px] text-white">
+      <button
+        onClick={toggleSidebar}
+        className="fixed md:hidden top-0 right-0 p-1 rounded-lg focus:outline-none focus:ring z-50 bg-slate-800 text-white m-3"
+      >
+        <svg
+          className="w-6 h-6"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d={
+              isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
+            }
+          />
+        </svg>
+        <span className="sr-only">Toggle Sidebar</span>
+      </button>
+      <div
+        className={`flex flex-col top-0 left-0 w-64 border-0 md:border-r-[2px] text-white transition-transform duration-300 transform sidebar ${isSidebarOpen ? "open md:w-fit w-screen" : "closed"}`}
+        style={{
+          height: isSidebarOpen && isMobile ? "100vh" : "",
+          position: isSidebarOpen && isMobile ? "fixed" : "relative",
+        }}
+      >
         <div className="overflow-y-auto overflow-x-hidden flex-grow">
           <ul className="flex flex-col py-4 space-y-1">
             <li className="px-5">
@@ -14,6 +70,7 @@ const SideBar = () => {
             <li>
               <a
                 href="#switch"
+                onClick={isMobile ? closeSidebar : undefined}
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -45,6 +102,7 @@ const SideBar = () => {
             <li>
               <a
                 href="#menubutton"
+                onClick={isMobile ? closeSidebar : undefined}
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -80,6 +138,7 @@ const SideBar = () => {
             <li>
               <a
                 href="#tooltip"
+                onClick={isMobile ? closeSidebar : undefined}
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -106,6 +165,7 @@ const SideBar = () => {
             <li>
               <a
                 href="#accordion"
+                onClick={isMobile ? closeSidebar : undefined}
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -186,6 +246,7 @@ const SideBar = () => {
             <li>
               <a
                 href="#tabs"
+                onClick={isMobile ? closeSidebar : undefined}
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -218,6 +279,7 @@ const SideBar = () => {
             <li>
               <a
                 href="#form"
+                onClick={isMobile ? closeSidebar : undefined}
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -256,6 +318,7 @@ const SideBar = () => {
             <li>
               <a
                 href="#main"
+                onClick={isMobile ? closeSidebar : undefined}
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-gray-200  border-l-4 border-transparent hover:border-emerald-400 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
