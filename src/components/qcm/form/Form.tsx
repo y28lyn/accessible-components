@@ -111,7 +111,11 @@ const Form = ({
             switch (question.type) {
               case "radio":
                 return (
-                  <div key={index}>
+                  <div
+                    key={index}
+                    role="radiogroup"
+                    aria-labelledby="group_radio"
+                  >
                     <p className={questionStyle}>{question.title}</p>
                     {question.answers?.map((answer, ansIndex) => (
                       <RadioButton
@@ -128,7 +132,7 @@ const Form = ({
 
               case "checkbox":
                 return (
-                  <div key={index}>
+                  <div key={index} role="group" aria-labelledby="group_label">
                     <p className={questionStyle}>{question.title}</p>
                     {question.answers?.map((answer, ansIndex) => (
                       <Checkbox

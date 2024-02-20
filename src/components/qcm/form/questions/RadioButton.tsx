@@ -10,7 +10,15 @@ type RadioProps = {
 
 const RadioButton = ({ id, name, value, label, style }: RadioProps) => (
   <div className={style}>
-    <Field type="radio" id={id} name={name} value={value} />
+    <Field
+      type="radio"
+      role="radio"
+      id={id}
+      name={name}
+      value={value}
+      aria-checked={value === "true" ? "true" : "false"}
+      tabindex={0}
+    />
     <label htmlFor={id}>{label}</label>
   </div>
 );
