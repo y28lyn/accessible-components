@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../index.css";
+import "../../index.css";
 
 const SideBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
