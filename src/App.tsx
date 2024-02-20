@@ -54,7 +54,7 @@ const App = () => {
 
       <main
         id="main"
-        className="min-h-screen flex flex-col md:flex-row bg-[#121315]"
+        className="min-h-screen flex flex-col md:flex-row bg-[#121315] border-t-[2px]"
       >
         <SideBar />
         <ul>
