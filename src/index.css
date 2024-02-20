@@ -24,3 +24,7 @@
   display: none;
   transform: translateX(-100%);
 }
+
+.body-no-scroll {
+  overflow: hidden;
+}

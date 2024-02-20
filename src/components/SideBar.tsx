@@ -26,6 +26,16 @@ const SideBar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isMobile) {
+      document.body.classList.toggle("body-no-scroll", isSidebarOpen);
+    }
+
+    return () => {
+      document.body.classList.remove("body-no-scroll");
+    };
+  }, [isSidebarOpen, isMobile]);
+
   return (
     <>
       <button
@@ -56,7 +66,6 @@ const SideBar = () => {
         style={{
           height: isSidebarOpen && isMobile ? "100vh" : "",
           position: isSidebarOpen && isMobile ? "fixed" : "relative",
-          overflow: isSidebarOpen && isMobile ? "hidden" : "",
         }}
       >
         <div className="overflow-y-auto overflow-x-hidden flex-grow">
