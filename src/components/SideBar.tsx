@@ -56,6 +56,7 @@ const SideBar = () => {
         style={{
           height: isSidebarOpen && isMobile ? "100vh" : "",
           position: isSidebarOpen && isMobile ? "fixed" : "relative",
+          overflow: isSidebarOpen && isMobile ? "hidden" : "",
         }}
       >
         <div className="overflow-y-auto overflow-x-hidden flex-grow">
