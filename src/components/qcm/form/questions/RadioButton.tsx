@@ -1,4 +1,4 @@
-import { Field } from "formik";
+import { ErrorMessage, Field } from "formik";
 
 type RadioProps = {
   id: string;
@@ -11,15 +11,21 @@ type RadioProps = {
 const RadioButton = ({ id, name, value, label, style }: RadioProps) => (
   <div className={style}>
     <Field
-      type="radio"
-      role="radio"
+      aria-describedby={`${id}-error`}
+      aria-labelledby={`${id}-label`}
+      className=""
       id={id}
       name={name}
+      type="radio"
       value={value}
-      aria-checked={value === "true" ? "true" : "false"}
-      tabIndex={0}
     />
-    <label htmlFor={id}>{label}</label>
+    <label className="" htmlFor={id} id={`${id}-label`}>
+      {label}
+    </label>
+
+    <ErrorMessage name={name}>
+      {(message) => <p id={`${id}-error`}>{message}</p>}
+    </ErrorMessage>
   </div>
 );
 

@@ -1,4 +1,4 @@
-import { Field } from "formik";
+import { ErrorMessage, Field } from "formik";
 
 type CheckboxProps = {
   id: string;
@@ -11,15 +11,21 @@ type CheckboxProps = {
 const Checkbox = ({ id, name, value, label, style }: CheckboxProps) => (
   <div className={style}>
     <Field
-      type="checkbox"
-      role="checkbox"
+      aria-describedby={`${id}-error`}
+      aria-labelledby={`${id}-label`}
+      className=""
       id={id}
       name={name}
+      type="checkbox"
       value={value}
-      aria-checked={value === "true" ? "true" : "false"}
-      tabIndex={0}
     />
-    <label htmlFor={id}>{label}</label>
+    <label className="" htmlFor={id} id={`${id}-label`}>
+      {label}
+    </label>
+
+    <ErrorMessage name={name}>
+      {(message) => <p id={`${id}-error`}>{message}</p>}
+    </ErrorMessage>
   </div>
 );
 

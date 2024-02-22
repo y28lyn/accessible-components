@@ -6,8 +6,8 @@ import Switch from "./components/items/Switch";
 import Title from "./components/items/Title";
 import Tooltip from "./components/items/Tooltip";
 import Tabs from "./components/items/Tabs";
-import type { FormDescription } from "./components/qcm/form/Form";
-import Form from "./components/qcm/form/Form";
+import Form, { type FormDescription } from "./components/qcm/form/Form";
+
 import "./index.css";
 
 const App = () => {
@@ -17,32 +17,24 @@ const App = () => {
 
   const formDescription: FormDescription = [
     {
-      title:
-        "1) Pour quelles familles de handicap, la Fédération Française Handisport organise-t-elle des compétitions ?",
+      id: "question1",
+      title: "1) What are the three first letters of the alphabet ?",
       type: "checkbox",
       answers: [
-        "A : Handicap Moteur",
-        "B : Handicap Visuel",
-        "C : Handicap Auditif",
-        "D : Handicap Mental",
-        "E : Handicap Psychique",
+        "A : Answer A",
+        "B : Answer B",
+        "C : Answer C",
+        "D : Answer D",
+        "E : Answer E",
       ],
-      correctAnswers: [
-        "A : Handicap Moteur",
-        "B : Handicap Visuel",
-        "C : Handicap Auditif",
-      ],
+      correctAnswers: ["A : Answer A", "B : Answer B", "C : Answer C"],
     },
     {
-      title:
-        "2) Quel est le nom de la plateforme permettant de choisir un sport pour les personnes en situation de handicap ?",
+      id: "question2",
+      title: "2) What is the third letter of the alphabet ?",
       type: "radio",
-      answers: [
-        "A : Guide des parasports",
-        "B : Annuaire des handisports",
-        "C : Handiguide des sports",
-      ],
-      correctAnswers: ["C : Handiguide des sports"],
+      answers: ["A : Answer A", "B : Answer B", "C : Answer C"],
+      correctAnswers: ["C : Answer C"],
     },
   ];
 

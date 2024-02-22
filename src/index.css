@@ -28,3 +28,8 @@
 .body-no-scroll {
   overflow: hidden;
 }
+
+::selection {
+  background-color: #3c6d6bdf;
+  color: #fff;
+}
